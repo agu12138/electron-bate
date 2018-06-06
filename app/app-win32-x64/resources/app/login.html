@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>WIN10-UI-DEMO</title>
+    <link rel='Shortcut Icon' type='image/x-icon' href='./img/windows.ico'>
+    <script type="text/javascript" src="./js/jquery-2.2.4.min.js"></script>
+    <script>if (typeof module === 'object') {window.jQuery = window.$ = module.exports;};</script>
+    <link href="./css/animate.css" rel="stylesheet">
+    <script type="text/javascript" src="./component/layer-v3.0.3/layer/layer.js"></script>
+    <link rel="stylesheet" href="./component/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link href="./css/default.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/weather.js"></script>
+    <script type="text/javascript" src="./js/win10.js"></script>
+
+
+    <style>
+        * {
+            font-family: "Microsoft YaHei", 微软雅黑, "MicrosoftJhengHei", 华文细黑, STHeiti, MingLiu
+        }
+        /*磁贴自定义样式*/
+        .win10-block-content-text {
+            line-height: 44px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .lock{
+         position: fixed;
+         right:0;
+         left:0;
+         top:0;
+         bottom:0;
+         background: url(images/lock.jpg) no-repeat center;
+         background-size:100% 100%;
+         z-index: 19930824;
+        }
+        html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+    .form {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+        width: 250px;
+        height: 270px;
+        text-align: center;
+        background: rgba(255,255,255,.3);
+    }
+        .pic {
+          margin-top: 30px;
+          width: 80px;
+          height: 80px;
+          background: url(images/pic.jpg) no-repeat center;
+          background-size: 100%;
+          border-radius: 50%;
+          opacity:0.8;
+        }
+        .pic:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+        .name {
+          margin-top: 15px;
+          color: white;
+          font-size: 18px;
+        }
+            .input input {
+              margin-top: 20px;
+              height: 30px;
+              text-indent: 10px;
+            }
+
+    </style>
+    <script>
+        Win10.onReady(function () {
+
+            //设置壁纸
+            Win10.setBgUrl({
+                main:'./img/wallpapers/main.jpg',
+                mobile:'./img/wallpapers/mobile.jpg',
+            });
+
+            Win10.setAnimated([
+                'animated flip',
+                'animated bounceIn',
+            ], 0.01);
+        });
+    </script>
+</head>
+<body>
+<div id="win10">
+    <div class="desktop">
+        <div id="win10-shortcuts" class="shortcuts-hidden">
+            <div class="shortcut" onclick="Win10.openUrl('http://win10ui.yuri2.cn','<img class=\'icon\' src=\'./img/smalllogo.png\'/>后台')">
+                <img class="icon" src="./img/icon/win10.png"/>
+                <div class="title">后台</div>
+            </div>
+        </div>
+        <div id="win10-desktop-scene"></div>
+    </div>
+    <div id="win10-menu" class="hidden">
+        <div class="list win10-menu-hidden animated animated-slideOutLeft">
+            <div class="item"><i class="red icon fa fa-wrench fa-fw"></i><span>API测试</span></div>
+            <div class="sub-item" onclick="Win10.openUrl('./child.html','子页')">父子页沟通</div>
+            <div class="sub-item" onclick="Win10.commandCenterOpen()">打开消息中心</div>
+            <div class="sub-item" onclick="Win10.newMsg('API测试','通过API可以发送消息至消息中心，自定义标题与内容(点击我试试)',function() {alert('click')})">发送带回调的消息</div>
+            <div class="sub-item" onclick="Win10.menuClose()">关闭菜单</div>
+            <div class="item" ><i class="blue icon fa fa-gavel fa-fw"></i>辅助工具</div>
+            <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-shortcut.html','图标代码生成器')">桌面图标代码生成器</div>
+            <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-tile.html','磁贴代码生成器')">磁贴代码生成器</div>
+            <div class="sub-item" onclick="Win10.openUrl('win10ui.yuri2.cn/src/tools/builder-menu.html','菜单代码生成器')">菜单代码生成器</div>
+            <div class="item" onclick="Win10.aboutUs()"><i class="purple icon fa fa-info-circle fa-fw"></i>关于</div>
+            <div class="item" onclick="layer.open({
+                title:'支持作者',
+                type: 1,
+                area:'300px',
+                offset:'50px',
+                shadeClose:true,
+                content: '<img width=\'300\' src=\'./img/presentation/donation.jpg\' />'
+            })"><i class="green icon fa fa-thumbs-up fa-fw"></i>捐赠</div>
+            <div class="item" onclick=" Win10.exit();"><i class="black icon fa fa-power-off fa-fw"></i>关闭</div>
+        </div>
+        <div class="blocks">
+            <div class="menu_group">
+                <div class="title">
+                    应用示例
+                </div>
+                <div loc="1,1" size="6,3" class="block">
+                    <div class="content red detail" >
+                        <iframe style="margin-top: 10px" frameborder="no" border="0" marginwidth="0" marginheight="0" width=264 height=110 src="//music.163.com/outchain/player?type=2&id=110771&auto=0&height=90"></iframe>
+                    </div>
+                    <div class="content red cover">
+                        <img width="264" style="position: relative;top: -50px;" src="./img/presentation/wangyiyun.gif" />
+                    </div>
+                </div>
+                <div loc="1,4" size="4,4" class="block">
+                    <div class="content blue cover" style="font-size: 30px;line-height: 176px;text-align: center">
+                        <i class="fa fa-cloud fa-fw"></i> 天气
+                    </div>
+                    <div class="content detail" style="background-color: rgb(46,147,217)">
+                        <iframe src="//www.seniverse.com/weather/weather.aspx?uid=U43DF172E7&cid=CHBJ000000&l=&p=SMART&a=1&u=C&s=13&m=2&x=1&d=1&fc=&bgc=2E93D9&bc=&ti=0&in=0&li=" frameborder="0" scrolling="no" width="200" height="300" allowTransparency="true"></iframe>
+                    </div>
+                </div>
+                <div loc="5,4" size="2,2" class="block">
+                    <div class="content">
+                        <img style="display: inline-block;border-radius: 4px" width="88px" src="http://q2.qlogo.cn/headimg_dl?bs=824831811&dst_uin=824831811&src_uin=824831811&fid=824831811&spec=100&url_enc=0&referer=bu_interface&term_type=PC"/>
+                    </div>
+                </div>
+                <div loc="5,6" size="2,2" class="block" onclick="win10_forgive_me()">
+                    <div class="content red">
+                        <div style="text-align: center;font-size: 30px;line-height: 44px"><i class="fa fa-bug fa-fw"></i></div>
+                        <div style="text-align: center;font-size: 16px;line-height: 44px">别点我</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu_group">
+                <div class="title">
+                    常用场景
+                </div>
+                <div loc="1,1" size="4,3" class="block">
+                    <div class="content" style="background-color: orangered">
+                        <div class="win10-block-content-text" style="font-size: 26px;line-height: 88px">WIN10-UI</div>
+                        <div class="win10-block-content-text">显示信息</div>
+                    </div>
+                </div>
+                <div loc="5,1" size="2,1" class="block">
+                    <div class="content" style="background-color: green">
+                        <div  class="win10-block-content-text">文字按钮</div>
+                    </div>
+                </div>
+                <div loc="5,2" size="2,2" class="block">
+                    <div class="content">
+                        <img style="width: 40px;height: 40px;margin: 5px auto;display: block" src="./img/icon/baidu.png">
+                        <div class="win10-block-content-text">图标按钮</div>
+                    </div>
+                </div>
+                <div loc="1,4" size="6,3" class="block">
+                    <div class="content" style="background: url('./img/presentation/1.png');background-size: auto">
+                        <div style="line-height:132px;text-align: center;">显示图片</div>
+                    </div>
+                </div>
+                <div loc="1,7" size="2,1" class="block">
+                    <div class="content" style="background-color: grey" onclick="Win10.openUrl('//www.baidu.com')">
+                        <div class="win10-block-content-text">内部链接</div>
+                    </div>
+                </div>
+                <div loc="3,7" size="2,1" class="block">
+                    <div class="content" style="background-color: blue" onclick="window.open('https://www.baidu.com')">
+                        <div class="win10-block-content-text">外部链接</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="win10-menu-switcher"></div>
+    </div>
+    <div id="win10_command_center" class="hidden_right">
+        <div class="title">
+            <h4 style="float: left">消息中心 </h4>
+            <span id="win10_btn_command_center_clean_all">全部清除</span>
+        </div>
+        <div class="msgs"></div>
+    </div>
+    <div id="win10_task_bar">
+        <div id="win10_btn_group_left" class="btn_group">
+            <div id="win10_btn_win" class="btn"><span class="fa fa-windows"></span></div>
+            <div class="btn" id="win10-btn-browser"><span class="fa fa-internet-explorer"></span></div>
+        </div>
+        <div id="win10_btn_group_middle" class="btn_group"></div>
+        <div id="win10_btn_group_right" class="btn_group">
+            <div class="btn" id="win10_btn_time">
+                <!--0:00<br/>-->
+                <!--1993/8/13-->
+            </div>
+            <div class="btn" id="win10_btn_command"><span id="win10-msg-nof" class="fa fa-comment-o"></span></div>
+            <div class="btn" id="win10_btn_show_desktop"></div>
+        </div>
+    </div>
+</div>
+<div class="lock animated">
+    <div class="form">
+        <div class="pic"></div>
+        <div class="name">admin</div>
+        <div class="input">
+            <input class="animated" type="password" placeholder="请输入密码" value="" />
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+      //本地存储功能
+      var storage = window.localStorage;
+      if(storage.url) {
+          $(".container").css({"background":"url("+storage.url+") no-repeat center","background-size":"100%"});
+      }
+      function requestFullScreen(element) {
+       // 判断各种浏览器，找到正确的方法
+       var requestMethod = element.requestFullScreen || //W3C
+       element.webkitRequestFullScreen || //Chrome等
+       element.mozRequestFullScreen || //FireFox
+       element.msRequestFullScreen; //IE11
+       if (requestMethod) {
+        requestMethod.call(element);
+       }
+       else if (typeof window.ActiveXObject !== "undefined") {//for Internet Explorer
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+         wscript.SendKeys("{F11}");
+        }
+       }
+      }
+      $("body").contextmenu(function() {  
+        return false;
+      });
+      //$("body").click(function() {requestFullScreen(document.documentElement)}); 
+      function pclock() {
+        this.dom = $(".input input");
+        this.Animate = ["zoomOutDown","bounce","fadeInDown","lightSpeedIn","lightSpeedOut","flipInY","rotateOut","bounceInUp"];
+      };
+      pclock.prototype = {
+          Class:function(a,b,c) {
+            $(a).show().addClass(b);
+            $(a).removeClass(c);
+          },
+          Notice:function(a,b,c) {
+            if(c) {
+              $(a).slideDown(b);
+            }else{
+              $(a).slideUp(b);
+            }
+          },
+          yanzhen:function() {
+            var pwd = 159357; //设置密码
+            if(this.dom.val() == pwd) {
+                Lock.Class(".lock",Lock.Animate[0]);
+                this.Notice(".notice",1000,1);
+            }else {
+                this.dom.val("");
+                Lock.Class(".input input",Lock.Animate[1]);
+                this.dom.attr({"placeholder":"密码错误"});
+            }
+          },
+          //锁屏
+          lockClick:function() {
+               this.dom.blur(function() {
+                  Lock.Class(this,"",Lock.Animate[1]);
+                  Lock.yanzhen();
+                });
+                $(window).keydown(function(a) {
+                  Lock.Class(".input input","",Lock.Animate[1]);
+                  if(a.which == 13) {
+                    Lock.yanzhen();
+                  }
+                })
+                $(".n_lock").click(function() {
+                    Lock.dom.val("");
+                    Lock.dom.attr({"placeholder":"请输入密码"});
+                    Lock.Class(".lock",Lock.Animate[2],Lock.Animate[0]);
+                })
+          },
+          photoClick:function(dom,a,b,c) {
+              $(dom).click(function() {
+                  Lock.Class(a,b,c);
+              });
+          },
+          //设置壁纸
+          setPhoto:function() {
+              $(".small_pic").click(function() {
+                  var that = $(this);
+                  $(".img_cover").addClass("animated");
+                  $(".img_cover").hide().removeClass("rotateIn");
+                  $(this).find(".img_cover").show().addClass("rotateIn");
+                  $(this).find(".progress").css("width","0%").stop().animate({
+                      width: "100%"
+                  },5000,function() {
+                      var imgUrl = that.find("img").attr("src");
+                      $(".container").css({"background":"url("+imgUrl+") no-repeat center","background-size":"100%"});
+                      storage.url = imgUrl; // 把最后设置的壁纸存储到localstorage
+                  });
+              });
+          },
+          NoticeClose:function(a,b) {
+              $(a).click(function() {
+                  Lock.Notice(".notice",1000,b);
+              });
+          },
+          //作品
+          Work:function() {
+              //初始化
+              function Zero() {
+                $(".works ul li").css("width","98px").stop();
+                $(".w_x").hide();
+                $(".w_font").show();
+                $(".w_content").removeClass(Lock.Animate[7]).hide(500);
+              };
+              $(".n_work").click(function() {
+                  Lock.Class(".works","",Lock.Animate[6]);
+                  Lock.Class(".works ul li",Lock.Animate[5]);
+                  Zero();
+              });
+              $(".works ul li").click(function() {
+                  //此判断==防止冒泡
+                  if($(this).width() != "571") {
+                    Zero();
+                    var that = $(this);
+                    $(this).find(".w_x").show();
+                    $(this).find(".w_font").fadeOut(500);
+                    $(this).animate({"width":"60%"},1000,function() {
+                      that.find(".w_content").show().addClass(Lock.Animate[7]);
+                    });
+                  }
+              });
+              $(".w_x").click(function() {
+                  $(".works").addClass(Lock.Animate[6]).hide(1000);
+              });
+          }
+        }
+        var Lock = new pclock();
+        Lock.lockClick();
+        Lock.photoClick(".n_photo",".photo",Lock.Animate[3],Lock.Animate[4]);
+        Lock.photoClick(".photo_exit",".photo",Lock.Animate[4],Lock.Animate[3]);
+        Lock.setPhoto();
+        Lock.NoticeClose(".n_x");
+        Lock.NoticeClose(".n_notices",1);
+        Lock.Work();
+  }); 
+  </script>
+</body>
+</html>
